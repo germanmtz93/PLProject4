@@ -68,47 +68,41 @@ var list = function() {
             }
         }
 
+        //The iterator
+        f.iterate = function(){
+            var current;
+            return {
+                getNext: function () {
+                    if (current == null) {
+                        current = l.head;
+                    } else {
+                        current = current.next;
+                    }
+                    return current.data;
+                }
+            }
+        };
+
         return f;
     }();
     return list;
 };
 
-var l1 = new list();
-l1.concat('a')
-l1.cons('b')
-document.writeln("l1: " + l1.first() + "<BR>");
-document.writeln("l1: " + l1.length() + "<BR>");
 
-var l2 = new list();
-l2.cons('c')
-document.writeln("<BR>l2: " + l2.car() + "<BR>");
-document.writeln("l2: " + l2.length() + "<BR>");
+//Make a list
+var lx = new list();
+lx.cons('January');
+lx.cons('February');
+lx.cons('March');
 
-var l3 = new list();
-var l4 = new list();
-l3.cons('x')
-l3.cons('y')
-l3.cons('z')
-l4.cons(l3);
-l4.cons(l3.car());
-
-document.writeln("<BR>l3: " + l3.car());
-while(l3.length() > 0) {
-    document.writeln(", " + l3.cdr().car());
-}
-
-var h = l4.run('head');
-document.writeln("<BR>l4: " + h.data);
-for(var i = 1; i < l4.length(); i++) {
-    h = h.next;
-    document.writeln(", " + h.data);
-}
-
-l4.map(function(x){return x+x})
-var h = l4.run('head');
-document.writeln("<BR>l4: " + h.data);
-for(var i = 1; i < l4.length(); i++) {
-    h = h.next;
-    document.writeln(", " + h.data);
-}
-
+document.writeln('list lx iterator results:<br>')
+// Testing the iterator
+var iterator = lx.iterate();
+document.writeln('<br>call 1');
+document.writeln("<br>" + iterator.getNext()+"<br>");
+document.writeln('<br>call 2');
+document.writeln("<br>" + iterator.getNext()+"<br>");
+document.writeln('<br>call 3');
+document.writeln("<br>" + iterator.getNext()+"<br>");
+document.writeln('<br>call 4')
+document.writeln("<br>" + iterator.getNext());

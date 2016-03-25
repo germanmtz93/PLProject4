@@ -45,23 +45,23 @@ print "\nSelect * from s_dept \n", \
 
 #select last_name, first_name, title, salary from s_emp;
 print "\nSelect last_name, first_name, title, salary from s_emp \n", \
-       [[i[1], i[2], i[5], i[6] ] for i in s_emp[1::]]
+       [[i[1], i[2], i[6], i[7] ] for i in s_emp[1::]]
 
 #select last_name, first_name, title, salary from s_emp where salary > 1500 and dept_id > 40;
 print "\nSelect last_name, first_name, title, salary from s_emp where salary > 1500 and dept_id > 40 \n", \
-       [[i[1], i[2], i[5], i[6] ] for i in s_emp[1::] if (i[5] > 1500) and (i[9] > 40)]
+       [[i[1], i[2], i[6], i[7] ] for i in s_emp[1::] if (i[7] > 1500) and (i[9] > 40)]
 
 #select last_name, first_name, title, salary from s_emp where salary > 1500 and dept_id > 40 order by last_name;
 print "\nSelect last_name, first_name, title, salary from s_emp where salary > 1500 and dept_id > 40 order by last_name \n", \
-       sorted([[i[1], i[2], i[6], i[7]] for i in s_emp[1::] if (i[5] > 1500) and (i[9] > 40)], key=lambda x: str(x[0]))
+       sorted([[i[1], i[2], i[6], i[7]] for i in s_emp[1::] if (i[7] > 1500) and (i[9] > 40)], key=lambda x: str(x[0]))
 
 #select last_name, first_name, title, salary from s_emp where salary > 1500 and dept_id > 40 order by salary desc;
 print "\nSelect last_name, first_name, title, salary from s_emp where salary > 1500 and dept_id > 40 order by salary desc \n", \
-       sorted([[i[1], i[2], i[6], i[7]] for i in s_emp[1::] if (i[5] > 1500) and (i[9] > 40)], key=lambda x: int(x[3]), reverse=True)
+       sorted([[i[1], i[2], i[6], i[7]] for i in s_emp[1::] if (i[7] > 1500) and (i[9] > 40)], key=lambda x: int(x[3]), reverse=True)
 
 #select last_name, first_name, title, salary, name from s_emp e join s_dept d on(e.dept_id = d.id);
 print "\nSelect last_name, first_name, title, salary, name from s_emp e join s_dept d on(e.dept_id = d.id) \n", \
-       [[i[1], i[2], i[5], i[6], j[1] ] for i in s_emp[1::] for j in s_dept[1::] if (i[9]==j[0]) ]
+       [[i[1], i[2], i[6], i[7], j[1] ] for i in s_emp[1::] for j in s_dept[1::] if (i[9]==j[0]) ]
 
 #select dept_id, avg(salary) from s_emp group by dept_id order by dept_id;
 print "\nSelect dept_id, avg(salary) from s_emp group by dept_id order by dept_id"
@@ -69,6 +69,6 @@ for department in sorted({d[9] for d in s_emp[1::] }):
        print (department, (lambda l: round(sum(l) / len(l), 2))(map(int,[ e[7] for e in s_emp[1::] if e[9] == department ])))
 
 #select dept_id, avg(salary) from s_emp group by dept_id having avg(salary) < 1500;
-print "\nSelect dept_id, avg(salary) from s_emp group by dept_id order by dept_id"
+print "\nSelect dept_id, avg(salary) from s_emp group by dept_id having avg(salary) < 1500"
 for department in sorted({d[9] for d in s_emp[1::] }):
        print (lambda deptno, avgSal: (deptno, avgSal) if avgSal < 1500 else '')(department, (lambda l: round(sum(l) / len(l), 2))(map(int,[ e[7] for e in s_emp[1::] if e[9] == department ])))
